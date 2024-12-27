@@ -13,10 +13,13 @@ class TripSeeder extends Seeder
      */
     public function run(): void
     {
+        $bus = DB::table('buses')->first();
+        $startStation = DB::table('stations')->first();
+        $endStation = DB::table('stations')->skip(4)->first();
         DB::table('trips')->insert([
-            'bus_id' => 1,
-            'start_station_id' => 1,
-            'end_station_id' => 5,
+            'bus_id' => $bus->id,
+            'start_station_id' => $startStation->id,
+            'end_station_id' => $endStation->id,
             'name' => 'Trip 1',
             'created_at' => now(),
             'updated_at' => now(),
