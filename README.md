@@ -7,60 +7,138 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## Laravel Fleet Management System
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This project is a Laravel-based Fleet Management System that allows users to manage bus bookings, seats, and trips. It includes features for checking available seats, booking seats, and managing trips and stations.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Features
 
-## Learning Laravel
+View available seats based on start and end stations.
+Book seats for trips.
+Manage trips, buses, and stations.
+Integrated with MySQL for data storage.
+Dockerized for easy development and deployment.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Requirements
+Docker & Docker Compose
+PHP 8.2 or higher (included in the Docker image)
+MySQL  (provided via Docker container)
+Composer (included in the Docker image)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Getting Started
+These instructions will help you get the project up and running on your local machine using Docker.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. Clone the repository
 
-## Laravel Sponsors
+git clone https://github.com/your-username/fleet-management.git
+cd fleet-management
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+2. Install PHP dependencies
 
-### Premium Partners
+Run Composer to install the required PHP dependencies:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- composer install
 
-## Contributing
+3. Set up environment configuration
+Duplicate the .env.example file to create a .env file. This file contains your environment-specific settings:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- cp .env.example .env
+Then, update the .env file with your database credentials. For example:
 
-## Code of Conduct
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=fleet_management
+DB_USERNAME=root
+DB_PASSWORD=
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+4. Generate the application key
+Run the following Artisan command to generate your application key:
+- php artisan key:generate
 
-## Security Vulnerabilities
+5. Set up the database
+Create the database and run migrations to set up the necessary tables:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- php artisan migrate
 
-## License
+Optionally, you can seed the database with some initial data:
+- php artisan db:seed
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Running the Application
+Start the local development server:
+
+- php artisan serve
+By default, the application will be accessible at http://localhost:8000.
+
+### Testing
+To run the tests for this application, use PHPUnit. To run all tests, use:
+
+- php artisan test
+
+
+### Docker Get Started
+
+1. Clone the repository
+Clone this repository to your local machine:
+- git clone https://github.com/your-username/fleet-management.git
+- cd fleet-management
+
+2. Build the Docker containers
+This project uses Docker and Docker Compose for easy setup. To build the containers, run:
+- docker-compose build
+This will build the Laravel app and MySQL containers.
+
+
+3. Start the Docker containers
+To start the containers in detached mode (in the background), run:
+- docker-compose up -d
+
+4. Set up the Laravel application
+Once the containers are running, you need to set up the Laravel app. Run the following commands inside the app container:
+- docker-compose exec app bash
+Now you’re inside the app container. Run these commands to set up the application:
+
+# Install PHP dependencies
+composer install
+
+# Generate the Laravel application key
+php artisan key:generate
+
+# Run migrations to set up the database
+php artisan migrate
+
+5. Access the application
+Once the setup is complete, you can access the Laravel application by navigating to http://localhost:8000 in your web browser.
+6. Stopping the application
+When you're done with the application, you can stop the containers by running:
+- docker-compose down
+
+### Project Structure
+
+- **[app/](Contains the core application code (Controllers, Models, Services))**
+- **[config](Configuration files for the Laravel application)**
+- **[database](Database migrations and seeders)**
+- **[docker-compose.yml](Docker Compose configuration for services like the app and database)**
+- **[Dockerfile]( Defines the PHP environment and dependencies for the Laravel app)**
+- **[.env](Environment configuration file used by Laravel (e.g., database credentials))**
+- **[resources]( Views and resources (including assets like CSS, JavaScript))**
+- **[routes](Defines the routes of the application)**
+- **[tests](Contains the unit and feature tests.)**
+
+## Testing
+
+Unit Tests
+To run the unit tests, make sure the containers are up and running, then execute the following command:
+- docker-compose exec app bash
+- php artisan test
+This will run all the unit tests and display the results in your terminal.
+
+Database Tests
+Ensure that the database is correctly set up before running tests. The php artisan migrate command will create the necessary tables for you.
+
+## Acknowledgments
+
+Laravel Framework (https://laravel.com)
+Docker (https://www.docker.com)
+MySQL (https://www.mysql.com)
