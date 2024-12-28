@@ -14,11 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 
+
+Route::get('/', [SeatController::class, 'index'])->name('seats.index');
 Route::get('/seats', [SeatController::class, 'index'])->name('seats.index');
 Route::post('/seats/search', [SeatController::class, 'search'])->name('seats.search');
 Route::post('/seats/book', [SeatController::class, 'book'])->name('seats.book');
